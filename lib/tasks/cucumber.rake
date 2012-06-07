@@ -6,12 +6,12 @@ begin
   namespace :cucumber do
     desc = "Facho plugin, add any cmd args after --"
     Cucumber::Rake::Task.new({:facho => 'db:test:prepare'}, desc) do |t|
-      t.cucumber_opts = "-r features " +
-                        "-r vendor/plugins/facho/spec/factories.rb " +
-                        "-r vendor/plugins/facho/features/step_definitions " +
+      t.cucumber_opts = "RAILS_ENV=cucumber -r features " +
+                        "-r #{File.join(File.dirname(__FILE__), '..', '..')}/spec/factories.rb " +
+                        "-r #{File.join(File.dirname(__FILE__), '..', '..')}/features/step_definitions " +
                         " #{ARGV[1..-1].join(" ") if ARGV[1..-1]}" +
                         # add all Facho features if none are passed in
-                        (ARGV.grep(/^vendor/).empty? ? "vendor/plugins/facho/features" : "")
+                        (ARGV.length <= 1 ? "#{File.join(File.dirname(__FILE__), '..', '..')}/features" : "")
       t.fork = true
       t.profile = 'default'
     end
