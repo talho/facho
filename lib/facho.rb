@@ -5,5 +5,3 @@ $extensions << :facho
 
 module Facho
 end
-
-require 'facho/engine'
